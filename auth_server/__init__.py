@@ -23,11 +23,14 @@ def create_app(config=None):
     
     from . import db
     db.connect_app(app)
+
+    from . import login
+    app.register_blueprint(login.blueprint)
     
     from . import authorize
     app.register_blueprint(authorize.blueprint)
 
-    from . import login
-    app.register_blueprint(login.blueprint)
+    from . import token
+    app.register_blueprint(token.blueprint)
     
     return app

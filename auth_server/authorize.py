@@ -47,10 +47,9 @@ def authorize():
 
 def create_auth_code(user_id, client_id, redirect_uri):
     string = user_id + client_id + redirect_uri
-    bytes = string.encode('utf8')
-    hash = base64.b64encode(bytes)
+    hash = base64.b64encode(string.encode('utf8'))
     expiration = datetime.datetime.now() + datetime.timedelta(0, 300)
     get_db().execute(
-        'INSERT INTO authcode(code, username, expiration) VALUES (?, ?, ?)', (hash, user_id, expiration)
+        'INSERT INTO authcode(code, client_id, username, expiration) VALUES (?, ?, ?, ?)', (hash, client_id, user_id, expiration)
     )
     return hash
